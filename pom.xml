@@ -29,8 +29,8 @@
     </developers>
 
     <scm>
-        <url>https://github.com/gaoice/easyexcel-spring-boot-starter</url>
-        <connection>scm:git:https://git@github.com/gaoice/easyexcel-spring-boot-starter.git</connection>
+        <url>https://github.com/gaoice/common</url>
+        <connection>scm:git:https://git@github.com/gaoice/common.git</connection>
     </scm>
 
     <distributionManagement>
