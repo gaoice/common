@@ -2,10 +2,8 @@ package com.gaoice.common.json;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 
 import java.lang.reflect.Type;
-import java.util.Map;
 
 /**
  * Gson 的简单封装
@@ -17,7 +15,7 @@ public class JsonUtils {
 
     public static final Gson GSON = new Gson();
 
-    private static final Type MAP_TYPE = new TypeToken<Map<String, Object>>() {
+    private static final Type MAP_TYPE = new TypeToken<JsonMap>() {
     }.getType();
 
     public static String toJson(Object o) {
@@ -37,11 +35,11 @@ public class JsonUtils {
     }
 
     /**
-     * @param s string
+     * @param s json string
      * @return JsonMap，may null
      */
     public static JsonMap jsonMap(String s) {
-        LinkedTreeMap<String, Object> map = fromJson(s, MAP_TYPE);
-        return map == null ? null : new JsonMap(map);
+        return fromJson(s, MAP_TYPE);
     }
+
 }

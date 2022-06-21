@@ -40,7 +40,6 @@ public class JsonUtilsTests {
         assert JsonUtils.jsonMap(null) == null;
     }
 
-
     public static class TestObject<T> {
         private T name;
 

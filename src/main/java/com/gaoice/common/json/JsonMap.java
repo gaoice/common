@@ -1,9 +1,9 @@
 package com.gaoice.common.json;
 
 import com.google.common.reflect.TypeToken;
-import com.google.gson.internal.LinkedTreeMap;
 
 import java.lang.reflect.Type;
+import java.util.LinkedHashMap;
 
 /**
  * 方便去处理无对应实体类的字符串
@@ -11,20 +11,13 @@ import java.lang.reflect.Type;
  *
  * @author gaoice
  */
-public class JsonMap {
+public class JsonMap extends LinkedHashMap<String, Object> {
 
-    private final LinkedTreeMap<String, Object> linkedTreeMap;
-
-    public JsonMap(LinkedTreeMap<String, Object> linkedTreeMap) {
-        this.linkedTreeMap = linkedTreeMap;
+    public JsonMap() {
     }
 
-    /**
-     * @param key string
-     * @return value string
-     */
-    public String get(String key) {
-        Object o = this.linkedTreeMap.get(key);
+    public String getString(String key) {
+        Object o = super.get(key);
         if (o == null) {
             return null;
         }
@@ -34,37 +27,33 @@ public class JsonMap {
         return JsonUtils.toJson(o);
     }
 
+    public String getString(String key, String defaultValue) {
+        String v = getString(key);
+        return v == null ? defaultValue : v;
+    }
+
     public JsonMap getJsonMap(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.jsonMap(v);
     }
 
     public <T> T getBean(String key, Class<T> c) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, c);
     }
 
     public <T> T getBean(String key, Type c) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, c);
     }
 
     public <T> T getBean(String key, TypeToken<T> c) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, c);
     }
 
-    public String getString(String key) {
-        return get(key);
-    }
-
-    public String getString(String key, String defaultValue) {
-        String r = getString(key);
-        return r == null ? defaultValue : r;
-    }
-
     public Integer getInteger(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Integer.class);
     }
 
@@ -74,7 +63,7 @@ public class JsonMap {
     }
 
     public Long getLong(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Long.class);
     }
 
@@ -84,7 +73,7 @@ public class JsonMap {
     }
 
     public Short getShort(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Short.class);
     }
 
@@ -94,7 +83,7 @@ public class JsonMap {
     }
 
     public Double getDouble(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Double.class);
     }
 
@@ -104,7 +93,7 @@ public class JsonMap {
     }
 
     public Float getFloat(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Float.class);
     }
 
@@ -114,7 +103,7 @@ public class JsonMap {
     }
 
     public Byte getByte(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Byte.class);
     }
 
@@ -124,7 +113,7 @@ public class JsonMap {
     }
 
     public Character getCharacter(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Character.class);
     }
 
@@ -134,7 +123,7 @@ public class JsonMap {
     }
 
     public Boolean getBoolean(String key) {
-        String v = get(key);
+        String v = getString(key);
         return JsonUtils.fromJson(v, Boolean.class);
     }
 
@@ -142,4 +131,5 @@ public class JsonMap {
         Boolean r = getBoolean(key);
         return r == null ? defaultValue : r;
     }
+
 }
