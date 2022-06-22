@@ -4,6 +4,7 @@ import com.google.common.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 方便去处理无对应实体类的字符串
@@ -32,9 +33,27 @@ public class JsonMap extends LinkedHashMap<String, Object> {
         return v == null ? defaultValue : v;
     }
 
+    @SuppressWarnings("unchecked")
     public JsonMap getJsonMap(String key) {
-        String v = getString(key);
-        return JsonUtils.jsonMap(v);
+        Object o = super.get(key);
+        if (o == null) {
+            return null;
+        }
+        if (o instanceof Map) {
+            Map<String, Object> map = null;
+            try {
+                map = (Map<String, Object>) o;
+            } catch (Throwable e) {
+                return JsonUtils.jsonMap(JsonUtils.toJson(o));
+            }
+            JsonMap r = new JsonMap();
+            r.putAll(map);
+            return r;
+        }
+        if (o instanceof String) {
+            return JsonUtils.jsonMap((String) o);
+        }
+        return JsonUtils.jsonMap(JsonUtils.toJson(o));
     }
 
     public <T> T getBean(String key, Class<T> c) {

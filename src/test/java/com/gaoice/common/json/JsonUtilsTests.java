@@ -10,14 +10,15 @@ public class JsonUtilsTests {
 
     @Test
     public void test() {
-        String s = "test";
+        // json test
+        String s = "小明";
         int num = 123;
         TestObject<String> to = new TestObject<>();
 
         String json = JsonUtils.toJson(to);
         assert json.equals("{}");
 
-        to.setName("test");
+        to.setName(s);
         json = JsonUtils.toJson(to);
         assert json.equals("{\"name\":\"" + s + "\"}");
 
@@ -25,6 +26,7 @@ public class JsonUtilsTests {
         assert JsonUtils.fromJson(json, new TypeToken<TestObject<String>>() {
         }).getName().equals(s);
 
+        // JsonMap test
         JsonMap jsonMap = JsonUtils.jsonMap(json);
 
         assert jsonMap.getString("name").equals(s);
@@ -37,10 +39,10 @@ public class JsonUtilsTests {
         assert jsonMap.getBean("asf", TestObject.class) == null;
         assert jsonMap.getInteger("asf", 1).equals(1);
         assert jsonMap.getBean("testObject", TestObject.class).getName().equals(s);
-        assert JsonUtils.jsonMap(null) == null;
     }
 
     public static class TestObject<T> {
+
         private T name;
 
         public T getName() {
